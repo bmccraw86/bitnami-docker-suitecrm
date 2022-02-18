@@ -2,6 +2,8 @@ version: '2'
 services:
   mariadb:
     image: docker.io/bitnami/mariadb:10.3
+    ports:
+      - 3306:3306
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
@@ -24,8 +26,12 @@ services:
       - SUITECRM_PASSWORD=password
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
+      - BITNAMI_DEBUG=true
+      - SUITECRM_SKIP_BOOTSTRAP=true
     volumes:
       - 'suitecrm_data:/bitnami/suitecrm'
+      - '~/provisions/caresherpa/bitnami-docker-suitecrm/7/debian-10/prebuildfs/opt/bitnami/scripts:/opt/bitnami/scripts'
+      - '~/provisions/caresherpa/bitnami-docker-suitecrm/7/debian-10/rootfs:/'
     depends_on:
       - mariadb
 volumes:
